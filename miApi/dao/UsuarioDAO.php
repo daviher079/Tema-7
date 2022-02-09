@@ -9,15 +9,9 @@ class UsuarioDAO implements DAO
     {
         $sql = "select codUsuario, nombre, Perfil from usuario;";
         $consulta =ConexionBD::ejecutaConsulta($sql, []);
-        $cont =0;
-        while($row = $consulta->fetchObject())
-        {
-            $usuario = new Usuario($row->codUsuario,
-                $row->nombre,'', $row->Perfil);
-                $registros[$cont]=$usuario;
-                $cont++;
-
-        }
+        $registros = $consulta->fetchAll(PDO::FETCH_ASSOC);
+        
+        
         return $registros;
 
     }
@@ -44,8 +38,8 @@ class UsuarioDAO implements DAO
         $sql = "select codUsuario, nombre, Perfil from usuario where codUsuario = ?;";
         $consulta =ConexionBD::ejecutaConsulta($sql, [$id]);
         $row = $consulta->fetchObject();
-        $usuario = new Usuario($row->codUsuario, $row->nombre, '', $row->Perfil);
-        return $usuario;
+       
+        return $row;
     }
 
     //modifica o actualiza
@@ -57,7 +51,11 @@ class UsuarioDAO implements DAO
     //crea o inserta 
     public static function save($objeto)
     {
-        echo "save ";
+        $sql = "insert into usuario values(?,?,?,0, null, ?)";
+        //$consulta =ConexionBD::ejecutaConsulta($sql, [$objeto->codUsuario]);
+        //$row = $consulta->fetchObject();
+       
+        return $row;
     }
 
     //borrar
