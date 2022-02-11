@@ -1,4 +1,5 @@
 <?php
+
 require "./config/config.php";
 //ver que contiene y que está pidiendo
 

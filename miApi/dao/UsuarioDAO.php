@@ -45,17 +45,36 @@ class UsuarioDAO implements DAO
     //modifica o actualiza
     public static function update($objeto)
     {
-        echo "update ";
+        $sql = "update usuario set nombre =?,password=?,Perfil=? where codigoUsuario=?";
+
+        $consulta = ConexionBD::ejecutaConsulta($sql, [$objeto->nombre, hash("sha256",$objeto->password), $objeto->perfil, $objeto->codUsuario]);
+
+        if($consulta->rowCount()==1)
+        {
+            return UsuarioDAO::buscaById($objeto->codUsuario);
+        }else
+        {
+            return null;
+        }
     }
     
     //crea o inserta 
     public static function save($objeto)
     {
-        $sql = "insert into usuario values(?,?,?,0, null, ?)";
-        //$consulta =ConexionBD::ejecutaConsulta($sql, [$objeto->codUsuario]);
-        //$row = $consulta->fetchObject();
-       
-        return $row;
+
+        $sql = "insert into usuario values (?,?,?,0,null,?)";
+
+        $consulta = ConexionBD::ejecutaConsulta($sql, [$objeto->codUsuario,hash("sha256",$objeto->password),$objeto->nombre,$objeto->perfil]);
+
+        // Recojo el ultimo insert de la BBDD (para saber el ultimo id y añadir el siguiente) (opcional)
+
+        if(!$consulta)
+        {
+            return null;
+        }
+
+        //Si $consulta->rowCount()==1
+        return UsuarioDAO::buscaById($objeto->codUsuario);
     }
 
     //borrar

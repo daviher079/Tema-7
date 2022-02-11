@@ -22,7 +22,8 @@
             {
     
                 $consulta= null;
-                echo "Error: ". $ex->getMessage(); 
+                echo "Error: ". $ex->getMessage();
+                //throw $ex; 
             }finally
             {
                 unset($con);
