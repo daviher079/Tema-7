@@ -2,7 +2,7 @@
 
 require "./config/config.php";
 //ver que contiene y que está pidiendo
-
+//DUDA PATH_INFO
     if(substr($_SERVER['PATH_INFO'], 0, 9) === "/usuarios")
     {
         $usuarios = new cUsuarios();
