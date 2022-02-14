@@ -1,8 +1,5 @@
 <?php
 
-
-
-
     function validarDesplegable()
     {
         $bandera=true;
@@ -31,15 +28,15 @@
 function comprobarSelect()
 {
     
-    if(!empty($_REQUEST['ciclo']) && isset($_REQUEST['enviado']) && $_REQUEST['ciclo']=='no'){
+    if(!empty($_REQUEST['ciudades']) && isset($_REQUEST['enviado']) && $_REQUEST['ciudades']=='no'){
         
-        label("Debe haber un campo ciclo");
+        echo "Debe haber un campo ciclo";
     }           
 }
 
 function recordarSelect($var)
 {
-    if(isset($_REQUEST['enviado']) && !empty($_REQUEST['ciclo']) && $_REQUEST['ciclo']==$var)
+    if(isset($_REQUEST['enviado']) && !empty($_REQUEST['ciudades']) && $_REQUEST['ciudades']==$var)
     {
         echo "selected";
     }    
