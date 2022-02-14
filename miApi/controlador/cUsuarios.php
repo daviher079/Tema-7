@@ -5,6 +5,7 @@ class cUsuarios extends BaseControlador
     public function general()
     {
         $uri = $this->getUri();
+        $filtro=$this->getParametros();
         switch ($_SERVER['REQUEST_METHOD']) {
             case 'GET':
 
@@ -13,7 +14,15 @@ class cUsuarios extends BaseControlador
                     $datos =UsuarioDAO::buscaById($uri[2]);
                 }
                 elseif (!isset($uri[2])) {
-                    $datos = UsuarioDAO::findAll();
+                    //Si no tiene valores de filtro entra por todos
+                    if(count($filtro)==0)
+                    {
+                        $datos = UsuarioDAO::findAll();
+
+                    }else
+                    {
+                        $datos = UsuarioDAO::findFiltro($filtro);
+                    }
                     
                 }
                 else
@@ -143,12 +152,11 @@ class cUsuarios extends BaseControlador
 
                 break;
 
-            case 'DELETE':
+                case 'DELETE':
 
                 break;
         }
     }
-
 }
 
 ?>

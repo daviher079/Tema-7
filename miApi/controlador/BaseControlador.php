@@ -11,7 +11,8 @@ class BaseControlador
 
     public function getParametros()
     {
-
+        parse_str($_SERVER['QUERY_STRING'], $array);
+        return $array;
     }
 
     public function sendRespuesta($datos,$cabecera = array())
