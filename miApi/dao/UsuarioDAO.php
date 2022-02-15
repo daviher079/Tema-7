@@ -72,7 +72,7 @@ class UsuarioDAO implements DAO
     //modifica o actualiza
     public static function update($objeto)
     {
-        $sql = "update usuario set nombre =?,password=?,Perfil=? where codigoUsuario=?";
+        $sql = "update usuario set nombre =?,password=?,Perfil=? where codUsuario=?";
 
         $consulta = ConexionBD::ejecutaConsulta($sql, [$objeto->nombre, hash("sha256",$objeto->password), $objeto->perfil, $objeto->codUsuario]);
 
