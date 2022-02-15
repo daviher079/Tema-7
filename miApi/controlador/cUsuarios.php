@@ -153,7 +153,25 @@ class cUsuarios extends BaseControlador
                 break;
 
                 case 'DELETE':
+                    $estado = UsuarioDAO::delete($uri[2]);
 
+                        if($estado == null)
+                        {
+                            $this->sendRespuesta(
+                                json_encode(array("error" => "No existe el usuario a eliminar")),
+                                array("Content-Type: application/json",
+                                "HTTP/1.1 400 Error en el formato de la petición")
+                            );
+                        }
+                        else
+                        {
+                            $this->sendRespuesta(
+                                json_encode(array("error" => "Usuario eliminado correctamente")),
+                                array("Content-Type: application/json",
+                                "HTTP/1.1 400 Error en el formato de la petición")
+                            );
+                        }
+                    
                 break;
         }
     }

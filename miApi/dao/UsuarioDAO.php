@@ -35,7 +35,7 @@ class UsuarioDAO implements DAO
     //Busca por clave primaria
     public static function buscaById($id)
     {
-        $sql = "select codUsuario, nombre, Perfil from usuario where codUsuario = ?;";
+        $sql = "select codUsuario, nombre, password, Perfil from usuario where codUsuario = ?;";
         $consulta =ConexionBD::ejecutaConsulta($sql, [$id]);
         $row = $consulta->fetchObject();
        
@@ -72,7 +72,7 @@ class UsuarioDAO implements DAO
     //modifica o actualiza
     public static function update($objeto)
     {
-        $sql = "update usuario set nombre =?,password=?,Perfil=? where codigoUsuario=?";
+        $sql = "update usuario set nombre =?,password=?,Perfil=? where codUsuario=?";
 
         $consulta = ConexionBD::ejecutaConsulta($sql, [$objeto->nombre, hash("sha256",$objeto->password), $objeto->perfil, $objeto->codUsuario]);
 
@@ -91,7 +91,7 @@ class UsuarioDAO implements DAO
 
         $sql = "insert into usuario values (?,?,?,0,null,?)";
 
-        $consulta = ConexionBD::ejecutaConsulta($sql, [$objeto->codUsuario,hash("sha256",$objeto->password),$objeto->nombre,$objeto->perfil]);
+        $consulta = ConexionBD::ejecutaConsulta($sql, [$objeto->codUsuario, hash("sha256",$objeto->password), $objeto->nombre, $objeto->perfil]);
 
         // Recojo el ultimo insert de la BBDD (para saber el ultimo id y añadir el siguiente) (opcional)
 
@@ -105,9 +105,24 @@ class UsuarioDAO implements DAO
     }
 
     //borrar
-    public static function delete($objeto)
+    public static function delete($id)
     {
-        echo "delete ";
+        $sql = "delete from usuario where codUsuario=?";
+
+        $consulta = ConexionBD::ejecutaConsulta($sql, [$id]);
+
+        // si !$consulta->rowCount() == 1 (es que ha ido bien)
+        // Si el nº de filas afectadas es 1, busca el objeto y lo devuelve
+
+        if($consulta->rowCount() == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return null;
+        }
+
     }
         
 
